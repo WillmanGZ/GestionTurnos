@@ -7,17 +7,20 @@ namespace GestionTurnos.Web.Data
     {
         public AppDbContext CreateDbContext(string[] args)
         {
-            // Carga manualmente la configuración del appsettings.json
+            // Cargar y leer manualmente la configuración del appsettings.json
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
 
+            // Obtener la cadena de conexión
             var connectionString = config.GetConnectionString("DefaultConnection");
 
+            // Crea el objeto de configuración y usa PGSQL como proveedor
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             optionsBuilder.UseNpgsql(connectionString);
 
+            // Retorna una instancia funcional del DbContext
             return new AppDbContext(optionsBuilder.Options);
         }
     }
