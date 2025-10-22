@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestionTurnos.Web.Models
 {
@@ -16,6 +15,9 @@ namespace GestionTurnos.Web.Models
         [MaxLength(15, ErrorMessage = "El documento solo puede tener maximo 15 caracteres")]
          public string Documento { get; set; }
 
+        [Required(ErrorMessage = "El sexo es obligatorio")]
+        public string Sexo { get; set; }
+
         [Required(ErrorMessage = "El correo es obligatorio")]
         [EmailAddress(ErrorMessage = "Formato de correo inválido")]
         public string Correo { get; set; }
@@ -25,8 +27,6 @@ namespace GestionTurnos.Web.Models
         [MinLength(10, ErrorMessage = "El teléfono debe tener minimo 10 caracteres")]
         public string Telefono { get; set; }
 
-        [Required(ErrorMessage = "La foto es obligatoria")]
-        [Column(TypeName = "bytea")]
-        public byte[] Foto { get; set; }
+        public string FotoUrl { get; set; } = string.Empty;
     }
 }

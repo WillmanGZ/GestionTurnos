@@ -2,6 +2,7 @@
 using GestionTurnos.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GestionTurnos.Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251022005637_RemoveRequiredPhoto")]
+    partial class RemoveRequiredPhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,18 +41,14 @@ namespace GestionTurnos.Web.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("character varying(15)");
 
-                    b.Property<string>("FotoUrl")
+                    b.Property<byte[]>("Foto")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("bytea");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
-
-                    b.Property<string>("Sexo")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
