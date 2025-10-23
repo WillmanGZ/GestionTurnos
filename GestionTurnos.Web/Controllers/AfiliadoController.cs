@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using GestionTurnos.Web.Data;
+﻿using GestionTurnos.Web.Data;
+using GestionTurnos.Web.Helpers;
 using GestionTurnos.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestionTurnos.Web.Controllers
 {
@@ -177,6 +178,26 @@ namespace GestionTurnos.Web.Controllers
         private bool AfiliadoExists(int id)
         {
             return _context.Afiliados.Any(e => e.Id == id);
+        }
+
+        // GET: Afiliado/Carnet/5
+        public async Task<IActionResult> Carnet(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var afiliado = await _context.Afiliados
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (afiliado == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.QR = QRHelper.GenerarQRParaAfiliado(afiliado.Id);
+
+            return View(afiliado);
         }
     }
 }

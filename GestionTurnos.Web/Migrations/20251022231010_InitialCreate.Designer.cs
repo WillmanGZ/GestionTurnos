@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GestionTurnos.Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251022005637_RemoveRequiredPhoto")]
-    partial class RemoveRequiredPhoto
+    [Migration("20251022231010_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,14 +41,18 @@ namespace GestionTurnos.Web.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("character varying(15)");
 
-                    b.Property<byte[]>("Foto")
+                    b.Property<string>("FotoUrl")
                         .IsRequired()
-                        .HasColumnType("bytea");
+                        .HasColumnType("text");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Sexo")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
