@@ -3,41 +3,26 @@ using GestionTurnos.Web.Interfaces;
 using GestionTurnos.Web.Repositories;
 using GestionTurnos.Web.Services;
 
+// Crear el builder de la aplicación
 var builder = WebApplication.CreateBuilder(args);
 
 // Añadir la base de datos usando el AddDatabase de configurations
 builder.Services.AddDatabase(builder.Configuration);
 
-// Poner el repositorio y servicio como instancia global para que sea injectado
+// Poner el repositorio y servicio como instancia global para que pueda ser injectado
 builder.Services.AddScoped<IAfiliadoRepository, AfiliadoRepository>();
 builder.Services.AddScoped<IAfiliadoServicio, AfiliadoService>();
 
-// Add services to the container.
+// Configura el MVC Framework (configura controllers, registra las vistas, activa el model binding y validation, etc)
 builder.Services.AddControllersWithViews();
 
+// Montar la aplicación
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+app.UseHttpsRedirection(); // Fuerza HTTPS
+app.UseStaticFiles(); // Permite servir CSS, JS, imágenes
+app.UseRouting();  // Activa el sistema de rutas MVC
+app.MapControllerRoute(name: "default", pattern: "{controller=Afiliado}/{action=Index}/{id?}"); // Enruta hacia los controladores
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.MapControllerRoute(
-    name: "Afiliados",
-    pattern: "{controller=Afiliado}/{action=Index}/{id?}");
-
+// Corre la aplicación
 app.Run();

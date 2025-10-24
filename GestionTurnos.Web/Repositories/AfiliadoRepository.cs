@@ -1,6 +1,6 @@
 ﻿using GestionTurnos.Web.Data;
+using GestionTurnos.Web.Data.Entities;
 using GestionTurnos.Web.Interfaces;
-using GestionTurnos.Web.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionTurnos.Web.Repositories

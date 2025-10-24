@@ -1,6 +1,6 @@
-﻿using GestionTurnos.Web.Helpers;
+﻿using GestionTurnos.Web.Data.Entities;
+using GestionTurnos.Web.Helpers;
 using GestionTurnos.Web.Interfaces;
-using GestionTurnos.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

@@ -5,7 +5,7 @@ namespace GestionTurnos.Web.Configurations
 {
     public static class DatabaseConfig
     {
-        // Método de extensión que se “pega” a IServiceCollection
+        // Método de extensión que agrega y configura la base de datos dentro del contenedor de dependencias (IServiceCollection)
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             // Cargar variables del archivo .env

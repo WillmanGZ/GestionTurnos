@@ -1,4 +1,4 @@
-﻿using GestionTurnos.Web.Models;
+﻿using GestionTurnos.Web.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionTurnos.Web.Data

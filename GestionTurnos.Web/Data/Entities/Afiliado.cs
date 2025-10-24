@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GestionTurnos.Web.Models
+namespace GestionTurnos.Web.Data.Entities
 {
     public class Afiliado
     {

@@ -1,5 +1,5 @@
-﻿using GestionTurnos.Web.Interfaces;
-using GestionTurnos.Web.Models;
+﻿using GestionTurnos.Web.Data.Entities;
+using GestionTurnos.Web.Interfaces;
 
 namespace GestionTurnos.Web.Services
 {
