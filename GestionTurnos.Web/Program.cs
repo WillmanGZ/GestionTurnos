@@ -1,33 +1,16 @@
-using GestionTurnos.Web.Data;
+using GestionTurnos.Web.Configurations;
 using GestionTurnos.Web.Interfaces;
 using GestionTurnos.Web.Repositories;
 using GestionTurnos.Web.Services;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Cargar variables del archivo .env
-DotNetEnv.Env.Load();
-
-var host = Environment.GetEnvironmentVariable("DB_HOST");
-var port = Environment.GetEnvironmentVariable("DB_PORT");
-var name = Environment.GetEnvironmentVariable("DB_NAME");
-var user = Environment.GetEnvironmentVariable("DB_USER");
-var pass = Environment.GetEnvironmentVariable("DB_PASS");
-
-// Construir la cadena de conexión dinámicamente
-var connectionString = $"Host={host};Port={port};Database={name};Username={user};Password={pass}";
-
-// Registrar el contexto
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
+// Añadir la base de datos usando el AddDatabase de configurations
+builder.Services.AddDatabase(builder.Configuration);
 
 // Poner el repositorio y servicio como instancia global para que sea injectado
 builder.Services.AddScoped<IAfiliadoRepository, AfiliadoRepository>();
 builder.Services.AddScoped<IAfiliadoServicio, AfiliadoService>();
-
-// Forma usando el appsettings.json
-// builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
