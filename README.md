@@ -20,7 +20,8 @@ El proyecto principal se encuentra en `GestionTurnos.Web` (archivo de proyecto: 
 ## Requisitos
 
 - .NET SDK 8.0 (o la versión indicada por el proyecto)
-- SQL Server o el proveedor de base de datos configurado en `appsettings.json`
+- PostgreSQL 17
+- .ENV con las credenciales de tu base de datos
 - (Opcional) Docker para ejecutar en contenedor
 
 ## Uso rápido / Cómo ejecutar (desarrollo)
@@ -89,7 +90,3 @@ docker run -p 5000:80 gestionturnos
 2. Crea una rama para tu trabajo.
 3. Añade pruebas o actualiza migraciones cuando cambies el esquema de la base de datos.
 4. Abre un pull request con una descripción clara de los cambios.
-
-## Licencia
-
-Este repositorio incluye el archivo `LICENSE.txt` en la raíz. Revisa ese archivo para los términos completos de la licencia.
