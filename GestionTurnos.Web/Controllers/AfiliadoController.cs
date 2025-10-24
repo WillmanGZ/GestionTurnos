@@ -1,24 +1,27 @@
 ﻿using GestionTurnos.Web.Data;
 using GestionTurnos.Web.Helpers;
+using GestionTurnos.Web.Interfaces;
 using GestionTurnos.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace GestionTurnos.Web.Controllers
 {
     public class AfiliadoController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IAfiliadoServicio _afiliadoServicio;
 
-        public AfiliadoController(AppDbContext context)
+        public AfiliadoController(IAfiliadoServicio afiliadoServicio)
         {
-            _context = context;
+            _afiliadoServicio = afiliadoServicio;
         }
+
 
         // GET: Afiliado
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Afiliados.ToListAsync());
+            return View(await _afiliadoServicio.GetAllAfiliados());
         }
 
         // GET: Afiliado/Details/5
@@ -29,8 +32,8 @@ namespace GestionTurnos.Web.Controllers
                 return NotFound();
             }
 
-            var afiliado = await _context.Afiliados
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var afiliado = await _afiliadoServicio.GetAfiliadoById(id);
+
             if (afiliado == null)
             {
                 return NotFound();
@@ -62,20 +65,9 @@ namespace GestionTurnos.Web.Controllers
                 afiliado.FotoUrl = "../Assets/woman-profile.png";
             }
 
-            if (!ModelState.IsValid)
-            {
-                foreach (var e in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine($"Error: {e.ErrorMessage}");
-                }
-            }
-
-
             if (ModelState.IsValid)
             {
-                Console.WriteLine("Entré");
-                _context.Add(afiliado);
-                await _context.SaveChangesAsync();
+                await _afiliadoServicio.CreateAfiliado(afiliado);
                 return RedirectToAction(nameof(Index));
             }
             return View(afiliado);
@@ -89,7 +81,8 @@ namespace GestionTurnos.Web.Controllers
                 return NotFound();
             }
 
-            var afiliado = await _context.Afiliados.FindAsync(id);
+            var afiliado = await _afiliadoServicio.GetAfiliadoById(id);
+
             if (afiliado == null)
             {
                 return NotFound();
@@ -123,8 +116,7 @@ namespace GestionTurnos.Web.Controllers
             {
                 try
                 {
-                    _context.Update(afiliado);
-                    await _context.SaveChangesAsync();
+                    await _afiliadoServicio.UpdateAfiliado(afiliado);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -150,8 +142,8 @@ namespace GestionTurnos.Web.Controllers
                 return NotFound();
             }
 
-            var afiliado = await _context.Afiliados
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var afiliado = await _afiliadoServicio.GetAfiliadoById(id);
+
             if (afiliado == null)
             {
                 return NotFound();
@@ -165,19 +157,19 @@ namespace GestionTurnos.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var afiliado = await _context.Afiliados.FindAsync(id);
+            var afiliado = await _afiliadoServicio.GetAfiliadoById(id);
+
             if (afiliado != null)
             {
-                _context.Afiliados.Remove(afiliado);
+                await _afiliadoServicio.DeleteAfiliado(id);
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AfiliadoExists(int id)
+        private async Task<bool> AfiliadoExists(int id)
         {
-            return _context.Afiliados.Any(e => e.Id == id);
+            return await _afiliadoServicio.GetAfiliadoById(id) != null;
         }
 
         // GET: Afiliado/Carnet/5
@@ -188,8 +180,8 @@ namespace GestionTurnos.Web.Controllers
                 return NotFound();
             }
 
-            var afiliado = await _context.Afiliados
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var afiliado = await _afiliadoServicio.GetAfiliadoById(id);
+
             if (afiliado == null)
             {
                 return NotFound();
