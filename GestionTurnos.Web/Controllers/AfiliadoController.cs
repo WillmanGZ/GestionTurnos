@@ -50,7 +50,7 @@ namespace GestionTurnos.Web.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [IgnoreAntiforgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Documento,Sexo,Correo,Telefono")] Afiliado afiliado)
         {
             // TODO: Do a dynamic photo
